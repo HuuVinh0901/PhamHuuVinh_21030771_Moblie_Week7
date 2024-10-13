@@ -1,21 +1,25 @@
 import { View, Image, Text } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollView, TextInput } from 'react-native-web'
 import { TouchableOpacity } from 'react-native'
 const list = [
-    { id: 1, name: 'SmartPhone', price: 890, img: require('../assets/img/phone.png') ,categories:"phone"},
-    { id: 2, name: 'SmartPhone', price: 900, img: require('../assets/img/phone.png') ,categories:"phone"},
-    { id: 3, name: 'SmartPhone', price: 980, img: require('../assets/img/phone.png') ,categories:"phone"},
-    { id: 4, name: 'SmartPhone', price: 1090, img: require('../assets/img/phone.png') ,categories:"phone"},
-    { id: 5, name: 'SmartPhone', price: 1090, img: require('../assets/img/phone.png') ,categories:"phone"},
-    { id: 6, name: 'SmartPhone', price: 1090, img: require('../assets/img/phone.png') ,categories:"phone"},
-    { id: 7, name: 'SmartPhone', price: 1090, img: require('../assets/img/phone.png') ,categories:"phone"},
-    { id: 8, name: 'SmartPhone', price: 1090, img: require('../assets/img/phone.png') ,categories:"phone"},
-    { id: 9, name: 'SmartPhone', price: 1090, img: require('../assets/img/phone.png') ,categories:"phone"},
-    { id: 10, name: 'SmartPhone', price: 1090, img: require('../assets/img/phone.png') ,categories:"phone"},
-    { id: 11, name: 'SmartPhone', price: 1090, img: require('../assets/img/phone.png') ,categories:"phone"},
+    { id: 1, name: 'SmartPhone', price: 890, img: require('../assets/img/phone.png') ,categories:"SmartPhone"},
+    { id: 2, name: 'SmartPhone', price: 900, img: require('../assets/img/phone.png') ,categories:"SmartPhone"},
+    { id: 3, name: 'SmartPhone', price: 980, img: require('../assets/img/phone.png') ,categories:"SmartPhone"},
+    { id: 4, name: 'SmartPhone', price: 1090, img: require('../assets/img/phone.png') ,categories:"SmartPhone"},
+    { id: 5, name: 'Ipad', price: 1090, img: require('../assets/img/ipad.png') ,categories:"Ipad"},
+    { id: 6, name: 'Ipad', price: 1090, img: require('../assets/img/ipad.png') ,categories:"Ipad"},
+    { id: 7, name: 'Ipad', price: 1090, img: require('../assets/img/ipad.png') ,categories:"Ipad"},
+    { id: 8, name: 'Ipad', price: 1090, img: require('../assets/img/ipad.png') ,categories:"Ipad"},
+    { id: 9, name: 'Macbook', price: 1090, img: require('../assets/img/macbook.png') ,categories:"Macbook"},
+    { id: 10, name: 'Macbook', price: 1090, img: require('../assets/img/macbook.png') ,categories:"Macbook"},
+    { id: 11, name: 'Macbook', price: 1090, img: require('../assets/img/macbook.png') ,categories:"Macbook"},
+    { id: 12, name: 'Macbook', price: 1090, img: require('../assets/img/macbook.png') ,categories:"Macbook"},
+
 ]
 const Screen2 = () => {
+    const [selectCate,setSelectCate] = useState('SmartPhone');
+    const fillterProduct=list.filter(product=>product.categories===selectCate)
     return (
         <ScrollView>
             <View style={{ flexDirection: 'row', borderRadius: 1, backgroundColor: 'grey', marginHorizontal: 10, width: '80%', paddingVertical: 5 }}>
@@ -34,15 +38,15 @@ const Screen2 = () => {
                 </TouchableOpacity>
             </View>
             <View style={{ flexDirection: 'row', marginHorizontal: 10, gap: 5, marginTop: 20 }}>
-                <TouchableOpacity style={{ borderRadius: 10, backgroundColor: '#ad6eba' }}>
+                <TouchableOpacity style={{ borderRadius: 10, backgroundColor: '#ad6eba' }} onPress={()=>setSelectCate('SmartPhone')}>
                     <Image style={{ height: 100, width: 120 }} source={require('../assets/img/smart.png')} />
 
 
                 </TouchableOpacity>
-                <TouchableOpacity style={{ borderRadius: 10, backgroundColor: '#5cb5e6' }}>
+                <TouchableOpacity style={{ borderRadius: 10, backgroundColor: '#5cb5e6' }} onPress={()=>setSelectCate('Ipad')}>
                     <Image style={{ height: 100, width: 120 }} source={require('../assets/img/ipad.png')} />
                 </TouchableOpacity>
-                <TouchableOpacity style={{ borderRadius: 10, backgroundColor: '#ebc459' }}>
+                <TouchableOpacity style={{ borderRadius: 10, backgroundColor: '#ebc459' }}onPress={()=>setSelectCate('Macbook')}>
                     <Image style={{ height: 100, width: 120 }} source={require('../assets/img/macbook.png')} />
                 </TouchableOpacity>
             </View>
@@ -58,7 +62,7 @@ const Screen2 = () => {
                 </TouchableOpacity>
             </View>
             <View style={{ flexDirection: 'column', gap: 10, marginHorizontal: 10 ,marginTop:10}}>
-                {list.map((dt) => (
+                {fillterProduct.map((dt) => (
                     <TouchableOpacity style={{ flexDirection: 'row' }} key={dt.id}>
                         <View style={{ width: '30%' }}>
                             <Image style={{}} source={dt.img} />
