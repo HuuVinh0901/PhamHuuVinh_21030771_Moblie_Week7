@@ -1,6 +1,6 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image,ScrollView,TextInput } from 'react-native'
 import React, { useState } from 'react'
-import { ScrollView, TextInput } from 'react-native-web'
+
 import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 const users=[

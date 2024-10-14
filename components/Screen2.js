@@ -1,6 +1,6 @@
-import { View, Image, Text } from 'react-native'
+import { View, Text, Image,ScrollView,TextInput } from 'react-native'
 import React, { useState } from 'react'
-import { ScrollView, TextInput } from 'react-native-web'
+
 import { TouchableOpacity } from 'react-native'
 const list = [
     { id: 1, name: 'SmartPhone 1', price: 890, desc: 'Best Sales', img: require('../assets/img/phone.png'), categories: "SmartPhone" },
