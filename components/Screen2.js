@@ -1,15 +1,16 @@
-import { View, Text, Image,ScrollView,TextInput } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, Image,ScrollView,TextInput,TouchableOpacity } from 'react-native'
+import React, { useState,useContext } from 'react'
+import { CartContext } from './CartContext';
 
-import { TouchableOpacity } from 'react-native'
+import Toast from 'react-native-toast-message';
 const list = [
-    { id: 1, name: 'SmartPhone 1', price: 890, desc: 'Best Sales', img: require('../assets/img/phone.png'), categories: "SmartPhone" },
-    { id: 2, name: 'SmartPhone 2', price: 900, desc: 'Best Matched', img: require('../assets/img/phone.png'), categories: "SmartPhone" },
-    { id: 3, name: 'SmartPhone 3', price: 980, desc: 'Best Sales', img: require('../assets/img/phone.png'), categories: "SmartPhone" },
-    { id: 4, name: 'SmartPhone 4', price: 1090, desc: 'Popular', img: require('../assets/img/phone.png'), categories: "SmartPhone" },
-    { id: 5, name: 'Ipad 1', price: 1090, desc: 'Best Sales', img: require('../assets/img/ipad.png'), categories: "Ipad" },
-    { id: 6, name: 'Ipad 2', price: 1090, desc: 'Best Matched', img: require('../assets/img/ipad.png'), categories: "Ipad" },
-    { id: 7, name: 'Ipad 3', price: 1090, desc: 'Best Sales', img: require('../assets/img/ipad.png'), categories: "Ipad" },
+    { id: 1, name: 'Iphone 12', price: 890, desc: 'Best Sales', img: require('../assets/img/ip12.png'), categories: "SmartPhone" },
+    { id: 2, name: 'Iphone 13', price: 900, desc: 'Best Matched', img: require('../assets/img/ip13.png'), categories: "SmartPhone" },
+    { id: 3, name: 'Iphone 14', price: 980, desc: 'Best Sales', img: require('../assets/img/ip14.png'), categories: "SmartPhone" },
+    { id: 4, name: 'Iphone 15', price: 1090, desc: 'Popular', img: require('../assets/img/ip15.png'), categories: "SmartPhone" },
+    { id: 5, name: 'Ipad pro', price: 1090, desc: 'Best Sales', img: require('../assets/img/ipadpro.png'), categories: "Ipad" },
+    { id: 6, name: 'Ipad pro 2', price: 1090, desc: 'Best Matched', img: require('../assets/img/ipadpro2.png'), categories: "Ipad" },
+    { id: 7, name: 'Ipad e1', price: 1090, desc: 'Best Sales', img: require('../assets/img/ipade.png'), categories: "Ipad" },
     { id: 8, name: 'Ipad 4', price: 1090, desc: 'Popular', img: require('../assets/img/ipad.png'), categories: "Ipad" },
     { id: 9, name: 'Macbook 1', price: 1090, desc: 'Best Sales', img: require('../assets/img/macbook.png'), categories: "Macbook" },
     { id: 10, name: 'Macbook 2', price: 1900, desc: 'Best Matched', img: require('../assets/img/macbook.png'), categories: "Macbook" },
@@ -17,26 +18,35 @@ const list = [
     { id: 12, name: 'Macbook 4', price: 1090, desc: 'Best Sales', img: require('../assets/img/macbook.png'), categories: "Macbook" },
     { id: 13, name: 'Macbook 5', price: 1090, desc: 'Best Sales', img: require('../assets/img/macbook.png'), categories: "Macbook" },
     { id: 14, name: 'Macbook 6', price: 1090, desc: 'Popular', img: require('../assets/img/macbook.png'), categories: "Macbook" },
-    { id: 15, name: 'SmartPhone 5', price: 1090, desc: 'Best Sales', img: require('../assets/img/phone.png'), categories: "SmartPhone" },
+    { id: 15, name: 'Iphone 16', price: 1090, desc: 'Best Sales', img: require('../assets/img/ip16.png'), categories: "SmartPhone" },
     { id: 16, name: 'Ipad 5', price: 1090, desc: 'Best Sales', img: require('../assets/img/ipad.png'), categories: "Ipad" },
     { id: 17, name: 'Ipad 6', price: 1090, desc: 'Best Sales', img: require('../assets/img/ipad.png'), categories: "Ipad" },
-    { id: 18, name: 'SmartPhone 6', price: 1090, desc: 'Best Sales', img: require('../assets/img/phone.png'), categories: "SmartPhone" },
-    { id: 19, name: 'SmartPhone 7', price: 1090, desc: 'Best Sales', img: require('../assets/img/phone.png'), categories: "SmartPhone" },
-    { id: 20, name: 'SmartPhone 8', price: 1090, desc: 'Best Sales', img: require('../assets/img/phone.png'), categories: "SmartPhone" },
+    { id: 18, name: 'Iphone XS Max', price: 1090, desc: 'Best Sales', img: require('../assets/img/ipXSMAX.png'), categories: "SmartPhone" },
+    { id: 19, name: 'Iphone 8 plus', price: 1090, desc: 'Best Sales', img: require('../assets/img/ip8plus.png'), categories: "SmartPhone" },
+    { id: 20, name: 'Iphone XR', price: 1090, desc: 'Best Sales', img: require('../assets/img/ipxr.png'), categories: "SmartPhone" },
 ]
-const Screen2 = () => {
+const Screen2 = ({navigation }) => {
+    const { addToCart } = useContext(CartContext);
     const [selectCate, setSelectCate] = useState('SmartPhone');
     const [selectedDesc, setSelectdDesc] = useState('Best Sales')
     const [selectType, setSelectType] = useState(false)
     const fillterProduct = list.filter(product => {
         return product.categories === selectCate && product.desc === selectedDesc
     })
-
+    const handleAddToCart = (product) => {
+        addToCart(product);
+        Toast.show({
+            type: 'success',
+            text1: 'THÊM SẢN PHẨM',
+            text2: `${product.name} đã được thêm vào giỏ hàng`
+        });
+        navigation.navigate('CartScreen'); 
+    };
     const displayProduct = selectType ? fillterProduct : fillterProduct.slice(0, 4)
     return (
         <ScrollView>
-            <View style={{ flexDirection: 'row', borderRadius: 1, backgroundColor: 'grey', marginHorizontal: 10, width: '80%', paddingVertical: 5 }}>
-                <Image style={{ height: 20, width: 20 }} source={require('../assets/img/search.png')} />
+            <View style={{ flexDirection: 'row', borderRadius: 3, backgroundColor:'#e6e8e8', marginHorizontal: 10, width: '80%', paddingVertical: 5,paddingHorizontal:5 }}>
+                <Image style={{ height: 20, width: 20,marginRight:5 }} source={require('../assets/img/search.png')} />
                 <TextInput placeholder='Search'>
 
                 </TextInput>
@@ -79,24 +89,28 @@ const Screen2 = () => {
 
 
                     {displayProduct.map((dt) => (
-                        <TouchableOpacity style={{ flexDirection: 'row' }} key={dt.id}>
+                        <View style={{ flexDirection: 'row',borderWidth:0.5,paddingVertical:5,paddingHorizontal:5,marginTop:3,borderColor:'#e6e8e8' }} key={dt.id}>
                             <View style={{ width: '30%' }}>
-                                <Image style={{}} source={dt.img} />
+                                <Image style={{height:50,width:50,borderRadius:5}} source={dt.img} />
                             </View>
 
                             <View style={{ flexDirection: 'column', width: '50%' }}>
                                 <Text>{dt.name}</Text>
                                 <Image style={{}} source={require('../assets/img/Rating5.png')} />
                             </View>
-                            <View style={{ width: '20%', alignItems: 'flex-end' }}>
+                            <View style={{ width: '20%', alignItems: 'flex-end',flexDirection:'column' }}>
+                                <TouchableOpacity onPress={() => handleAddToCart(dt)}>
+                                <Image style={{height:30,width:30,borderRadius:10}} source={require('../assets/img/addCart.png')} />
+                                </TouchableOpacity>
+                            
                                 <Text style={{ fontWeight: 'bold' }}>${dt.price}</Text>
                             </View>
 
-                        </TouchableOpacity>
+                        </View>
                     ))}
                 </ScrollView>
             </View>
-            <TouchableOpacity style={{ marginHorizontal: 10, backgroundColor: 'grey', paddingVertical: 5, alignItems: 'center', borderRadius: 5 }}
+            <TouchableOpacity style={{ marginHorizontal: 10, backgroundColor: '#e6e8e8', paddingVertical: 5, alignItems: 'center', borderRadius: 5 }}
                 onPress={() => setSelectType(true)}
             >
                 <Text>See all</Text>
